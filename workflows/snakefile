@@ -1,0 +1,26 @@
+rule all:
+    input:
+        "exploratory-analysis/analysis.html"
+
+rule preprocess_data:
+    input:
+        "data/raw_data.csv"
+    output:
+        "data/processed_data.csv"
+    conda:
+        "envs/r_env.yaml"
+    script:
+        "scripts/preprocess_data.R"
+
+rule render_quarto:
+    input:
+        "exploratory-analysis/analysis.qmd",
+        "data/processed_data.csv"
+    output:
+        "exploratory-analysis/analysis.html"
+    conda:
+        "envs/quarto_env.yaml"
+    shell:
+        """
+        quarto render {input[0]} --to html
+        """

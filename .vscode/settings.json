@@ -1,0 +1,12 @@
+{
+    "r.rterm.option": [],
+    "r.rterm.mac": "/opt/homebrew/bin/R",
+    // "r.rterm.linux": "/usr/bin/R",
+    // "r.rterm.windows": "C:\\Program Files\\R\\R-4.3.1\\bin\\x64\\R.exe",
+    "r.sessionWatcher": true,
+    "r.lsp.path": null,
+    "r.lsp.debug": false,
+    "r.plot.useHttpgd": true,
+    "r.rmarkdown.enableCodeLens": true,
+    "quarto.path": "/opt/homebrew/bin/quarto"
+  }

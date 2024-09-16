@@ -1,0 +1,26 @@
+---
+title: "Exploratory Data Analysis"
+author: "Your Name"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+
+# Introduction
+
+Provide an introduction to your analysis here.
+
+# Data Loading
+
+```{r}
+#| label: load-packages
+#| message: false
+library(tidyverse)
+```
+
+```{r}
+#| label: load-data
+data <- read_csv("../data/processed_data.csv")
+```

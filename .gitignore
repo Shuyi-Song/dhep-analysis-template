@@ -1,0 +1,15 @@
+# R/RStudio
+.Rhistory
+.RData
+.Rproj.user/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Quarto
+*.html
+*.pdf
+
+# Conda environments
+envs/
