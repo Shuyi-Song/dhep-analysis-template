@@ -21,7 +21,7 @@ Welcome to the Econometric Data Analysis Template Repository! This repository pr
    cd econometric-analysis-template
    ```
 
-2. Set Up Conda Environments
+2. **Set Up Conda Environments**
 
 For R scripts:
 
@@ -34,7 +34,7 @@ For Quarto rendering:
 conda env create -f envs/quarto_env.yaml
 ```
 
-3. Initialize 'renv'
+3. **Initialize 'renv'**
 
 In the project directory, open R and run:
 ```{R}
@@ -42,47 +42,48 @@ install.packages("renv")
 renv::restore()
 ```
 
-4. Run the workflow
+4. **Run the workflow**
 
 ```bash
 snakemake --use-conda --cores 1
 ```
 Note: Replace --cores 1 with the number of cores you want to use.
 
-5. Using the Repository
+5. **Using the Repository**
 
-Adding Data
+_Adding Data_
 
-	•	Place your raw data files in the data/ directory.
-	•	Update data/README.md with descriptions of your datasets.
+- Place your raw data files in the data/ directory.
+- Update data/README.md with descriptions of your datasets.
 
-Editing Scripts
+_Editing Scripts_
 
-	•	Modify scripts/preprocess_data.R to suit your data preprocessing needs.
-	•	Add additional scripts to the scripts/ directory as needed.
+- Modify scripts/preprocess_data.R to suit your data preprocessing needs.
+- Add additional scripts to the scripts/ directory as needed.
 
-Editing the Quarto Document
+_Editing the Quarto Document_
 
-	•	Edit exploratory-analysis/analysis.qmd to include your analysis and findings.
+- Edit exploratory-analysis/analysis.qmd to include your analysis and findings.
 
-Running the Workflow
+_Running the Workflow_
 
-	•	Use Snakemake to automate the execution of your scripts and rendering of the Quarto document.
+- Use Snakemake to automate the execution of your scripts and rendering of the Quarto document.
 
 ```bash
 snakemake --use-conda --cores all
 ```
-Updating Conda Environments
-	•	If you add new packages to your scripts, update the corresponding .yaml files in envs/ and recreate the environment:
+_Updating Conda Environments_
+
+- If you add new packages to your scripts, update the corresponding .yaml files in envs/ and recreate the environment:
 
 ```bash
 conda env update -f envs/r_env.yaml
 ```
-	•	Remember to run renv::snapshot() in R to update renv.lock
+- Remember to run renv::snapshot() in R to update renv.lock
 
-Version Control with Git
+_Version Control with Git_
 
-	•	Commit your changes regularly:
+- Commit your changes regularly:
 
 ```bash
 git add .
@@ -123,11 +124,11 @@ git push origin main
 
 ## Additional Resources
 
-	•	Conda Documentation: https://docs.conda.io/en/latest/
-	•	Snakemake Documentation: https://snakemake.readthedocs.io/
-	•	R renv Package: https://rstudio.github.io/renv/
-	•	Quarto Documentation: https://quarto.org/docs/
-	•	VS Code R Extension Guide: Using R in VS Code
+- Conda Documentation: https://docs.conda.io/en/latest/
+- Snakemake Documentation: https://snakemake.readthedocs.io/
+- R renv Package: https://rstudio.github.io/renv/
+- Quarto Documentation: https://quarto.org/docs/
+- VS Code R Extension Guide: Using R in VS Code
 
 ## Support
 
