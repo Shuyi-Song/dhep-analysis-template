@@ -13,3 +13,6 @@ __pycache__/
 
 # Conda environments
 envs/
+
+# Mac
+.DS_Store
