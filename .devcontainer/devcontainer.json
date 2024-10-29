@@ -1,32 +1,97 @@
 {
-    "name": "R Development Container",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
-    // Features to add to the dev container. More info: https://containers.dev/features.
-    "features": {
-        "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {}
-    },
+	"name": "R Data Science Environment",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": { "VARIANT": "4" }
+	},
 
-    // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    "forwardPorts": [8787], 
+	// Install Dev Container Features
+	"features": {
+		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {},
+		"ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
+			"version": "none",
+			"installJupyterlab": true
+		}
+	},
 
-    // Use 'postCreateCommand' to run commands after the container is created.
-    "postCreateCommand": "R -q -e 'renv::restore()'",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-toolsai.jupyter",
+				"ms-toolsai.jupyter-renderers",
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"vsls-contrib.codetour",
+				"GitHub.copilot",
+				"quarto.quarto"
+			]
+		}
+	},
 
-    // Configure tool-specific properties.
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "Ikuyadeu.r",                // R extension for VS Code
-                "yzhang.markdown-all-in-one", // Markdown support for Quarto files
-                "ms-python.python",           // Python extension (if using Python as well)
-                "donjayamanne.githistory",    // Git History extension for viewing Git logs
-                "eamodio.gitlens"             // GitLens for enhanced Git support
-            ]
-        }
-    },
+	// Forward Jupyter and RStudio ports
+	"forwardPorts": [8787, 8888],
+	"portsAttributes": {
+		"8787": {
+			"label": "RStudio",
+			"requireLocalPort": true,
+			"onAutoForward": "ignore"
+		},
+		"8888": {
+			"label": "Jupyter",
+			"requireLocalPort": true,
+			"onAutoForward": "ignore"
+		}
+	},
 
-    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-    // "remoteUser": "root"
+	// Run command after container starts
+	"postAttachCommand": "sudo rstudio-server start",
+
+	// Documentation link
+	"documentationURL": "https://github.com/rocker-org/devcontainer-features/tree/main/src/quarto-cli",
+
+	// Additional options
+	"options": {
+		"version": {
+			"type": "string",
+			"proposals": ["latest", "prerelease"],
+			"default": "latest",
+			"description": "Select version of the Quarto CLI, if not latest."
+		},
+		"installTinyTex": {
+			"type": "boolean",
+			"default": false,
+			"description": "Install TinyTeX by using the `quarto tools install tinytex` command. Works only with version 1.2 or later."
+		},
+		"installChromium": {
+			"type": "boolean",
+			"default": false,
+			"description": "Run the `quarto tools install chromium` command. Check the document for details."
+		}
+	},
+
+	// Environment variables for renv cache
+	"containerEnv": {
+		"RENV_PATHS_CACHE": "/renv/cache"
+	},
+
+	// Mounts for renv cache
+	"mounts": [
+		{
+			"source": "devcontainer-renv-cache",
+			"target": "/renv/cache",
+			"type": "volume"
+		}
+	],
+
+	// Command to execute on container start
+	"postStartCommand": "/usr/local/share/rocker-devcontainer-features/renv-cache/scripts/poststart.sh",
+
+	// Install order for features
+	"installsAfter": [
+		"ghcr.io/devcontainers/features/common-utils",
+		"ghcr.io/rocker-org/devcontainer-features/apt-packages",
+		"ghcr.io/rocker-org/devcontainer-features/r-apt",
+		"ghcr.io/rocker-org/devcontainer-features/r-packages",
+		"ghcr.io/rocker-org/devcontainer-features/r-rig"
+	]
 }
