@@ -1,9 +1,9 @@
 {
 	"name": "R Data Science Environment",
 	"build": {
+	"image": "ghcr.io/rocker-org/devcontainer/r-ver:4",
 	  "dockerfile": "Dockerfile",
 	  "args": { "VARIANT": "4" }
-	  "image": "ghcr.io/rocker-org/devcontainer/r-ver:4",
 	},
 	"features": {
 	  "ghcr.io/devcontainers/features/docker-in-docker:2": {
