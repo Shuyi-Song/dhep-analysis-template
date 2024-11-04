@@ -53,7 +53,7 @@ Note: Replace --cores 1 with the number of cores you want to use.
 
 _Adding Data_
 
-- Place your raw data files in the data/ directory.
+- Place your raw data files in the workflow/ data/ directory.
 - Update data/README.md with descriptions of your datasets.
 
 _Editing Scripts_
@@ -63,7 +63,7 @@ _Editing Scripts_
 
 _Editing the Quarto Document_
 
-- Edit exploratory-analysis/analysis.qmd to include your analysis and findings.
+- Edit [exploratory-analysis/analysis.qmd](workflow/quarto/report_example.qmd)d to include your analysis and findings.
 
 _Running the Workflow_
 

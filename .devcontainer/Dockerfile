@@ -1,7 +1,22 @@
-# Base Dev Container Image for R with Tidyverse. More info: https://github.com/rocker-org/devcontainer-images/pkgs/container/devcontainer%2Ftidyverse
-# Available R versions: 4, 4.1, 4.0
-ARG VARIANT="4.2"
-FROM ghcr.io/rocker-org/devcontainer/tidyverse:${VARIANT}
+FROM docker.io/library/ubuntu:latest
+
+ENV R_VERSION="devel"
+ENV R_HOME="/usr/local/lib/R"
+ENV TZ="Etc/UTC"
+
+COPY scripts/install_R_source.sh /rocker_scripts/install_R_source.sh
+RUN /rocker_scripts/install_R_source.sh
+
+ENV CRAN="https://cloud.r-project.org"
+ENV LANG=en_US.UTF-8
+
+COPY scripts/bin/ /rocker_scripts/bin/
+COPY scripts/setup_R.sh /rocker_scripts/setup_R.sh
+RUN /rocker_scripts/setup_R.sh
+
+CMD ["R"]
+
+COPY scripts /rocker_scripts
 
 # Install required R packages
 RUN install2.r --error --skipinstalled -n -1 \
@@ -27,7 +42,6 @@ RUN install2.r --error --skipinstalled -n -1 \
         haven \
         knitr \
         rmarkdown \
-        quarto \
         renv \
         grf \
         xgboost \
@@ -56,23 +70,5 @@ RUN install2.r --error --skipinstalled -n -1 \
     && R -q -e 'remotes::install_github("https://github.com/dcomtois/summarytools/tree/0-8-9")'
 
 # Install additional Dev Container features
-# Quarto CLI for R Markdown documents
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends quarto-cli && \
-    rm -rf /var/lib/apt/lists/*
-
-# JupyterLab installation with IRkernel
-RUN R -e "install.packages('IRkernel')" && \
-    R -e "IRkernel::installspec(user = FALSE)" && \
-    pip install jupyterlab
-
-# Setup renv cache
-ENV RENV_PATHS_CACHE="/renv/cache"
-VOLUME /renv/cache
-
-# Copy requirements.txt for Python packages
-COPY requirements.txt /tmp/pip-tmp/
-RUN python3 -m pip --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt
-
-# Start RStudio Server as a post-attach command
-CMD ["sudo", "rstudio-server", "start"]
+FROM rocker/r-ver:4
+RUN /rocker_scripts/install_quarto.sh

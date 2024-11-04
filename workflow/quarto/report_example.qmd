@@ -1,17 +1,65 @@
 ---
-title: "Data Analysis Output"
-author: "Your Name"
-date: "`r format(Sys.Date(), '%B %d, %Y')`"
-format:
+title: "Quarto example: `r params$project`"
+author: "Vito"
+format: 
   html:
     toc: true       # Table of Contents for easier navigation
     code-fold: true # Allows folding of code blocks for cleaner report view
     code-tools: true # Adds buttons to hide/show code
+params:
+  input_txt: '../results/test.txt'
+  output_txt: '../results/test_copy.txt'
+  project: 'Test'
+  renv: NULL
 ---
+
 
 # Introduction
 
-This report provides an analysis of xxx data. The purpose of this template is to provide an example of the data analysis output.
+Provide an introduction to your analysis here. You may include the purpose of the exploratory analysis, the dataset, and any specific questions you aim to address.
+
+# Data Loading
+
+```{r}
+#| label: load-packages
+#| message: false
+# Load necessary libraries
+library(tidyverse)
+```
+
+```{r}
+#| label: load-data
+data <- read_csv("../data/processed_data.csv")
+
+# Display a summary of the dataset
+summary(data)
+
+# Check the structure of the dataset
+str(data)
+
+#| label: check-missing-values
+# Count missing values in each column
+data %>% summarise(across(everything(), ~ sum(is.na(.))))
+
+#| label: visual-exploration
+# Plot a histogram of a continuous variable (adjust for your dataset)
+ggplot(data, aes(x = continuous_variable)) +
+  geom_histogram(binwidth = 10, fill = "blue", color = "white") +
+  labs(title = "Histogram of Continuous Variable", x = "Value", y = "Frequency")
+
+#| label: scatterplot
+# Example scatter plot between two continuous variables
+ggplot(data, aes(x = variable_x, y = variable_y)) +
+  geom_point() +
+  labs(title = "Scatterplot of X vs Y", x = "X Variable", y = "Y Variable")
+
+
+
+```
+
+# Output
+
+This section provides an analysis of xxx data. The purpose of this template is to provide an example of the data analysis output.
 
 # Data Loading
 
